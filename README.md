@@ -2,6 +2,11 @@
 
 A full-stack, AI-powered customer support chat app. Users sign up or log in, chat with an AI assistant (via [OpenRouter](https://openrouter.ai)), and their conversation history is saved per user in MongoDB.
 
+## Live demo
+
+- **App:** <https://chat.suryathink.com>
+- **API:** <https://chat.api.suryathink.com> (health check: [/health](https://chat.api.suryathink.com/health))
+
 ## Features
 
 - **JWT authentication:** signup, login and logout. Passwords are hashed with bcrypt, and the token is stored in an **httpOnly cookie** (not readable by JavaScript).
