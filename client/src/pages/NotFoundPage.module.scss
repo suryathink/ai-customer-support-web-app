@@ -1,0 +1,22 @@
+@use "@/styles/abstracts" as *;
+
+.page {
+  @include flex-center;
+  flex-direction: column;
+  gap: $space-3;
+  min-height: 100%;
+  padding: $space-8 $space-4;
+  text-align: center;
+
+  p {
+    color: $color-text-muted;
+    margin-bottom: $space-3;
+  }
+}
+
+.code {
+  font-size: 4rem;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  color: $color-primary;
+}

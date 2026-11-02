@@ -1,0 +1,22 @@
+@use "@/styles/abstracts" as *;
+
+.window {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.center {
+  @include flex-center;
+  flex: 1;
+  padding: $space-6 $space-4;
+  color: $color-primary;
+}
+
+.emptyError {
+  width: 100%;
+  max-width: $chat-max-width;
+  margin: 0 auto;
+  padding: 0 $space-4 $space-4;
+}

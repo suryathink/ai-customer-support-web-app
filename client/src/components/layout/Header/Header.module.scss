@@ -1,0 +1,55 @@
+@use "@/styles/abstracts" as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  height: $header-height;
+  flex-shrink: 0;
+  padding: 0 $space-6;
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+
+  @include respond-below(md) {
+    padding: 0 $space-2;
+  }
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+
+  @include respond-below(md) {
+    align-items: center;
+  }
+}
+
+.title {
+  @include truncate;
+  max-width: 100%;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: $radius-full;
+  background: #22c55e;
+}
+
+.mobileOnly {
+  @include respond-above(md) {
+    display: none;
+  }
+}

@@ -1,0 +1,108 @@
+@use "@/styles/abstracts" as *;
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: $space-3;
+  animation: fade-in $transition-base;
+}
+
+.user {
+  flex-direction: row-reverse;
+
+  .body {
+    align-items: flex-end;
+  }
+
+  .bubble {
+    background: $color-bubble-user;
+    color: $color-on-primary;
+    border-bottom-right-radius: $radius-sm;
+  }
+}
+
+.assistant .bubble {
+  background: $color-bubble-assistant;
+  border: 1px solid $color-border;
+  border-bottom-left-radius: $radius-sm;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  max-width: min(78%, 640px);
+
+  @include respond-below(sm) {
+    max-width: 85%;
+  }
+}
+
+.bubble {
+  padding: $space-3 $space-4;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  overflow-wrap: anywhere;
+}
+
+.pending {
+  opacity: 0.75;
+}
+
+.plain {
+  white-space: pre-wrap;
+}
+
+.time {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  padding: 0 $space-1;
+}
+
+.markdown {
+  > * + * {
+    margin-top: $space-3;
+  }
+
+  ul,
+  ol {
+    padding-left: $space-5;
+  }
+
+  li + li {
+    margin-top: $space-1;
+  }
+
+  code {
+    font-family: $font-mono;
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: $color-surface-muted;
+  }
+
+  pre {
+    padding: $space-3;
+    border-radius: $radius-sm;
+    background: $color-surface-muted;
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-size: $font-size-md;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

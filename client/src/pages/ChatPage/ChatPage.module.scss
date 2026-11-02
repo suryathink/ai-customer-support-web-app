@@ -1,0 +1,14 @@
+@use "@/styles/abstracts" as *;
+
+.layout {
+  display: flex;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}

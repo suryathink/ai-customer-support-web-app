@@ -1,0 +1,65 @@
+@use "@/styles/abstracts" as *;
+
+.empty {
+  @include flex-center;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-3;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: $space-8 $space-4;
+  text-align: center;
+
+  h2 {
+    font-size: $font-size-xl;
+  }
+
+  p {
+    color: $color-text-muted;
+  }
+}
+
+.icon {
+  @include flex-center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: $space-2;
+  border-radius: $radius-lg;
+  background: $color-primary-soft;
+  color: $color-primary;
+}
+
+.suggestions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-3;
+  width: 100%;
+  margin-top: $space-4;
+
+  @include respond-below(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.suggestion {
+  @include focus-visible;
+  padding: $space-3 $space-4;
+  text-align: left;
+  font-size: $font-size-sm;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition:
+    border-color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    border-color: $color-primary;
+    background: $color-primary-soft;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

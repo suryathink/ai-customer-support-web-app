@@ -1,0 +1,16 @@
+@use "@/styles/abstracts" as *;
+
+.scroller {
+  @include thin-scrollbar;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: $chat-max-width;
+  margin: 0 auto;
+  padding: $space-6 $space-4;
+}

@@ -1,0 +1,120 @@
+@use "@/styles/abstracts" as *;
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(360px, 1.1fr);
+  min-height: 100%;
+
+  @include respond-below(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brandPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: $space-10;
+  color: #fff;
+  background:
+    radial-gradient(circle at 20% 20%, rgb(255 255 255 / 12%), transparent 45%),
+    linear-gradient(145deg, #4f46e5, #7c3aed);
+
+  @include respond-below(md) {
+    display: none;
+  }
+}
+
+.brand,
+.mobileBrand {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+}
+
+.logo {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-md;
+  background: rgb(255 255 255 / 18%);
+}
+
+.mobileBrand {
+  display: none;
+  margin-bottom: $space-6;
+
+  .logo {
+    background: $color-primary;
+    color: $color-on-primary;
+  }
+
+  @include respond-below(md) {
+    display: flex;
+  }
+}
+
+.pitch {
+  max-width: 420px;
+
+  h2 {
+    font-size: $font-size-2xl;
+    line-height: 1.25;
+    margin-bottom: $space-6;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    opacity: 0.92;
+
+    &::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: $radius-full;
+      background: #fff;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.formPanel {
+  @include flex-center;
+  padding: $space-8 $space-4;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.header {
+  margin-bottom: $space-6;
+
+  h1 {
+    font-size: $font-size-xl;
+    margin-bottom: $space-1;
+  }
+
+  p {
+    color: $color-text-muted;
+  }
+}
+
+.footer {
+  margin-top: $space-6;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}

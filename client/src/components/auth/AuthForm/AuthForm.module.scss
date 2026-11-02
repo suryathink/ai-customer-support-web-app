@@ -1,0 +1,11 @@
+@use "@/styles/abstracts" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  button[type="submit"] {
+    margin-top: $space-2;
+  }
+}

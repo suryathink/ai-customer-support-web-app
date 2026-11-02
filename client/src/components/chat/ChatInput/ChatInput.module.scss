@@ -1,0 +1,71 @@
+@use "@/styles/abstracts" as *;
+
+.wrapper {
+  width: 100%;
+  max-width: $chat-max-width;
+  margin: 0 auto;
+  padding: 0 $space-4 $space-4;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: $space-2;
+  padding: $space-2;
+  padding-left: $space-4;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:focus-within {
+    border-color: $color-primary;
+  }
+
+  &.disabled {
+    opacity: 0.8;
+  }
+}
+
+.textarea {
+  @include thin-scrollbar;
+  flex: 1;
+  min-height: 40px;
+  padding: $space-2 0;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.5;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-4;
+  padding: $space-2 $space-2 0;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+
+  @include respond-below(sm) {
+    > span:first-child {
+      display: none;
+    }
+  }
+}
+
+.overLimit {
+  color: $color-danger;
+  font-weight: $font-weight-semibold;
+}
+
+.srOnly {
+  @include visually-hidden;
+}

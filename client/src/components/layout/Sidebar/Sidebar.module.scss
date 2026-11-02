@@ -1,0 +1,150 @@
+@use "@/styles/abstracts" as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width;
+  flex-shrink: 0;
+  height: 100%;
+  padding: $space-4 $space-3;
+  background: $color-surface;
+  border-right: 1px solid $color-border;
+
+  // Becomes an off-canvas drawer on small screens
+  @include respond-below(md) {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 20;
+    width: min(85vw, $sidebar-width);
+    transform: translateX(-100%);
+    transition: transform $transition-base;
+    box-shadow: $shadow-md;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.backdrop {
+  display: none;
+
+  @include respond-below(md) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    background: $color-overlay;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-base;
+
+    &.backdropVisible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $space-2 $space-4;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-weight: $font-weight-bold;
+}
+
+.logo {
+  @include flex-center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-sm;
+  background: $color-primary;
+  color: $color-on-primary;
+}
+
+.closeButton {
+  @include respond-above(md) {
+    display: none;
+  }
+}
+
+.newChat {
+  margin-bottom: $space-4;
+}
+
+.history {
+  @include thin-scrollbar;
+  flex: 1;
+  overflow-y: auto;
+  margin: 0 (-$space-1);
+  padding: 0 $space-1;
+}
+
+.group + .group {
+  margin-top: $space-4;
+}
+
+.groupLabel {
+  padding: 0 $space-3 $space-1;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.state {
+  @include flex-center;
+  padding: $space-6 $space-3;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.error {
+  margin: 0 $space-1;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-top: $space-3;
+  padding: $space-3 $space-2 0;
+  border-top: 1px solid $color-border;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.accountName,
+.accountEmail {
+  @include truncate;
+}
+
+.accountName {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.accountEmail {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
