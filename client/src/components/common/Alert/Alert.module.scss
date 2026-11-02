@@ -1,0 +1,35 @@
+@use "@/styles/abstracts" as *;
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  background: $color-danger-soft;
+  color: $color-danger;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  min-width: 0;
+}
+
+.dismiss {
+  @include flex-center;
+  @include focus-visible;
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-sm;
+  color: inherit;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+}

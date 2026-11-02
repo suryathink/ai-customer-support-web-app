@@ -1,0 +1,31 @@
+@use "@/styles/abstracts" as *;
+
+.avatar {
+  @include flex-center;
+  flex-shrink: 0;
+  border-radius: $radius-full;
+  font-weight: $font-weight-semibold;
+  user-select: none;
+}
+
+.user {
+  background: $color-primary-soft;
+  color: $color-primary;
+}
+
+.assistant {
+  background: $color-primary;
+  color: $color-on-primary;
+}
+
+.sm {
+  width: 28px;
+  height: 28px;
+  font-size: $font-size-xs;
+}
+
+.md {
+  width: 36px;
+  height: 36px;
+  font-size: $font-size-sm;
+}

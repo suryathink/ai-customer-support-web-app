@@ -1,0 +1,45 @@
+@use "@/styles/abstracts" as *;
+
+.iconButton {
+  @include flex-center;
+  @include focus-visible;
+  flex-shrink: 0;
+  border-radius: $radius-md;
+  transition:
+    background-color $transition-fast,
+    color $transition-fast;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.ghost {
+  color: $color-text-muted;
+
+  &:hover:not(:disabled) {
+    background: $color-surface-muted;
+    color: $color-text;
+  }
+}
+
+.primary {
+  background: $color-primary;
+  color: $color-on-primary;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+  }
+}
+
+.sm {
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-sm;
+}
+
+.md {
+  width: 40px;
+  height: 40px;
+}

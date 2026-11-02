@@ -1,0 +1,74 @@
+@use "@/styles/abstracts" as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:focus-within {
+    border-color: $color-primary;
+    box-shadow: $focus-ring;
+  }
+
+  &.hasError {
+    border-color: $color-danger;
+  }
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 $space-3;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
+
+.toggle {
+  @include flex-center;
+  @include focus-visible;
+  width: 36px;
+  height: 36px;
+  margin-right: $space-1;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.error,
+.hint {
+  font-size: $font-size-xs;
+}
+
+.error {
+  color: $color-danger;
+}
+
+.hint {
+  color: $color-text-muted;
+}

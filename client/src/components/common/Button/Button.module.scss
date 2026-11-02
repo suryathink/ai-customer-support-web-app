@@ -1,0 +1,84 @@
+@use "@/styles/abstracts" as *;
+
+.button {
+  @include flex-center;
+  @include focus-visible;
+  gap: $space-2;
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+  transition:
+    background-color $transition-fast,
+    border-color $transition-fast,
+    color $transition-fast,
+    transform $transition-fast;
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.primary {
+  background: $color-primary;
+  color: $color-on-primary;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+  }
+}
+
+.secondary {
+  background: $color-surface;
+  border-color: $color-border;
+  color: $color-text;
+
+  &:hover:not(:disabled) {
+    background: $color-surface-muted;
+  }
+}
+
+.ghost {
+  color: $color-text-muted;
+
+  &:hover:not(:disabled) {
+    background: $color-surface-muted;
+    color: $color-text;
+  }
+}
+
+.danger {
+  background: $color-danger;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.95);
+  }
+}
+
+.sm {
+  height: 32px;
+  padding: 0 $space-3;
+  font-size: $font-size-sm;
+}
+
+.md {
+  height: 40px;
+  padding: 0 $space-4;
+  font-size: $font-size-sm;
+}
+
+.lg {
+  height: 48px;
+  padding: 0 $space-6;
+  font-size: $font-size-md;
+}
+
+.fullWidth {
+  width: 100%;
+}
