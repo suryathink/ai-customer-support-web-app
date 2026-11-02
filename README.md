@@ -156,6 +156,26 @@ It can also be run manually from the **Actions** tab (*Deploy Backend → Run wo
 - The container listens on `127.0.0.1:5000` only; nginx ([deploy/nginx/chat.api.suryathink.com.conf](deploy/nginx/chat.api.suryathink.com.conf)) proxies the domain to it, with buffering disabled for the streaming endpoint.
 - Logs: `docker logs -f ai-support-server`
 
+## Deployment (frontend)
+
+The React app is served as static files by nginx on the same droplet at `https://chat.suryathink.com`, and calls the API at `https://chat.api.suryathink.com`. Both are subdomains of the same site, so the httpOnly auth cookie keeps working.
+
+**CI/CD** ([.github/workflows/deploy-client.yml](.github/workflows/deploy-client.yml)) runs on every push to `main` that changes `client/`:
+
+1. Installs dependencies and builds the app with `VITE_API_URL=https://chat.api.suryathink.com` (a type error or failed build stops the deploy).
+2. Uploads the build to the droplet and runs [deploy/deploy-client.sh](deploy/deploy-client.sh), which unpacks it into `/var/www/chat.suryathink.com/releases/<commit>` and atomically switches the `current` symlink to it. The last 5 releases are kept.
+
+It uses the same GitHub secrets as the backend deploy.
+
+**Rollback:** point `current` at a previous release on the droplet:
+
+```bash
+ls -1t /var/www/chat.suryathink.com/releases
+ln -sfn /var/www/chat.suryathink.com/releases/<commit> /var/www/chat.suryathink.com/current
+```
+
+nginx config: [deploy/nginx/chat.suryathink.com.conf](deploy/nginx/chat.suryathink.com.conf) (SPA fallback, long-term caching for hashed assets, `no-cache` for `index.html`).
+
 ## Environment variables
 
 ### `server/.env`

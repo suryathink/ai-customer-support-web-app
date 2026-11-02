@@ -1,0 +1,72 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/**"
+      - "deploy/deploy-client.sh"
+      - ".github/workflows/deploy-client.yml"
+  # Allows a manual re-deploy from the Actions tab
+  workflow_dispatch:
+
+# Never run two deploys at the same time
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+env:
+  # Baked into the build: the browser calls the API directly
+  VITE_API_URL: https://chat.api.suryathink.com
+
+jobs:
+  deploy:
+    name: Build and Deploy to DigitalOcean Droplet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: client
+        run: npm ci
+
+      # Type-checks and builds; a broken build stops the deploy here
+      - name: Build
+        working-directory: client
+        run: npm run build
+
+      - name: Package Build
+        run: tar -czf client-${GITHUB_SHA}.tar.gz -C client/dist .
+
+      - name: Set up SSH
+        env:
+          DROPLET_SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+          DROPLET_KNOWN_HOSTS: ${{ secrets.DROPLET_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DROPLET_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "$DROPLET_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload and Release
+        env:
+          DROPLET_HOST: ${{ secrets.DROPLET_HOST }}
+          DROPLET_USER: ${{ secrets.DROPLET_USER }}
+        run: |
+          scp -i ~/.ssh/deploy_key client-${GITHUB_SHA}.tar.gz \
+            "${DROPLET_USER}@${DROPLET_HOST}:/tmp/client-${GITHUB_SHA}.tar.gz"
+          ssh -i ~/.ssh/deploy_key "${DROPLET_USER}@${DROPLET_HOST}" \
+            'bash -s' -- "${GITHUB_SHA}" < deploy/deploy-client.sh
+
+      - name: Remove SSH Key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
