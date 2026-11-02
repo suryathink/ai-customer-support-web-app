@@ -61,7 +61,6 @@ Deliverables
    - Clear README with setup steps
 2. Deployed link
 
-Estimated Time: 6-10 hours (depending on bonus features)
 `.trim();
 
 /** Used when the model's answer about itself can't be trusted. */

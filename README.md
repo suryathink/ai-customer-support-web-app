@@ -128,6 +128,34 @@ npm run dev          # http://localhost:5173
 
 The Vite dev server proxies `/auth` and `/chat` to the API, so the browser sees a single origin.
 
+## Deployment (backend)
+
+The API runs as a Docker container on a DigitalOcean droplet behind nginx (HTTPS via Let's Encrypt) at `https://chat.api.suryathink.com`.
+
+**CI/CD** ([.github/workflows/deploy-server.yml](.github/workflows/deploy-server.yml)) runs on every push to `main` that changes `server/`:
+
+1. Builds the server image and pushes it to Docker Hub as `suryathink/ai-customer-support-server:latest` and `:sha-<commit>`.
+2. Connects to the droplet over SSH and runs [deploy/deploy-server.sh](deploy/deploy-server.sh), which pulls the new image, replaces the container and checks `/health`. If the new container is unhealthy, it rolls back to the previous image.
+
+It can also be run manually from the **Actions** tab (*Deploy Backend → Run workflow*).
+
+**Required GitHub secrets**
+
+| Secret                | Value                                                      |
+| --------------------- | ---------------------------------------------------------- |
+| `DOCKER_USERNAME`     | Docker Hub username                                        |
+| `DOCKER_PASSWORD`     | Docker Hub access token (Read & Write)                     |
+| `DROPLET_HOST`        | Droplet IP address                                         |
+| `DROPLET_USER`        | SSH user on the droplet                                    |
+| `DROPLET_SSH_KEY`     | Private key of a deploy key authorized on the droplet      |
+| `DROPLET_KNOWN_HOSTS` | Output of `ssh-keyscan <droplet-ip>` (host verification)   |
+
+**On the droplet**
+
+- Production environment variables live in `/opt/ai-support/server.env` (readable by root only, never in the image).
+- The container listens on `127.0.0.1:5000` only; nginx ([deploy/nginx/chat.api.suryathink.com.conf](deploy/nginx/chat.api.suryathink.com.conf)) proxies the domain to it, with buffering disabled for the streaming endpoint.
+- Logs: `docker logs -f ai-support-server`
+
 ## Environment variables
 
 ### `server/.env`
