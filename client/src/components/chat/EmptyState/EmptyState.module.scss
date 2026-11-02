@@ -36,8 +36,9 @@
   width: 100%;
   margin-top: $space-4;
 
+  // Stay two columns on phones so eight suggestions don't push the input away
   @include respond-below(sm) {
-    grid-template-columns: 1fr;
+    gap: $space-2;
   }
 }
 
@@ -52,6 +53,11 @@
   transition:
     border-color $transition-fast,
     background-color $transition-fast;
+
+  @include respond-below(sm) {
+    padding: $space-2 $space-3;
+    font-size: $font-size-xs;
+  }
 
   &:hover:not(:disabled) {
     border-color: $color-primary;

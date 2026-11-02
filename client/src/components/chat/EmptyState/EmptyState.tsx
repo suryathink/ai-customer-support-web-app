@@ -11,6 +11,9 @@ interface EmptyStateProps {
 const DEFAULT_SUGGESTIONS = [
   'How do I reset my password?',
   'I want to track my order',
+  'How can I request a refund?',
+  'What can you help me with?',
+  'What is this app?',
   'Who built this app?',
   'Who is Surya?',
 ]
