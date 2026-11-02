@@ -2,7 +2,6 @@
  * Setup express server.
  */
 
-import http from "http";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import cors from "cors";
@@ -83,8 +82,7 @@ const start = async () => {
 
   await connectMongo();
 
-  const server = http.createServer(app);
-  server.listen(EnvVars.Port, () =>
+  app.listen(EnvVars.Port, () =>
     logger.info(
       `🚀 Server running in ${EnvVars.NodeEnv} mode on port ${EnvVars.Port}`
     )
