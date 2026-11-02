@@ -28,7 +28,16 @@ export default {
     ApiKey: process.env.OPENROUTER_API_KEY ?? "",
     BaseUrl: process.env.OPENROUTER_BASE_URL ?? "https://openrouter.ai/api/v1",
     Model:
-      process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.3-70b-instruct:free",
+      process.env.OPENROUTER_MODEL ?? "nvidia/nemotron-3.5-lightning:free",
+    // Tried in order when the primary model is down, rate-limited or retired.
+    // "openrouter/free" routes to any currently available free model.
+    FallbackModels: (
+      process.env.OPENROUTER_FALLBACK_MODELS ??
+      "google/gemma-4-31b-it:free,openrouter/free"
+    )
+      .split(",")
+      .map((model) => model.trim())
+      .filter(Boolean),
     TimeoutMs: Number(process.env.OPENROUTER_TIMEOUT_MS ?? 30000),
     ContextMessages: Number(process.env.AI_CONTEXT_MESSAGES ?? 10),
   },

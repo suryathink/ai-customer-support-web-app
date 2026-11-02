@@ -40,7 +40,11 @@ export const AiService = {
       const { data } = await openRouter.post(
         "/chat/completions",
         {
-          model: EnvVars.OpenRouter.Model,
+          // OpenRouter tries these in order, falling back on errors
+          models: [
+            EnvVars.OpenRouter.Model,
+            ...EnvVars.OpenRouter.FallbackModels,
+          ],
           messages: [{ role: "system", content: SYSTEM_PROMPT }, ...history],
         },
         {
@@ -54,6 +58,9 @@ export const AiService = {
       const reply: string | undefined = data?.choices?.[0]?.message?.content;
       if (!reply?.trim()) {
         throw new Error("Empty response from OpenRouter");
+      }
+      if (data.model && data.model !== EnvVars.OpenRouter.Model) {
+        logger.warn(`Primary model unavailable, answered by ${data.model}`);
       }
       return reply.trim();
     } catch (error) {

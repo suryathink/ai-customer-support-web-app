@@ -60,8 +60,11 @@ export class ChatController {
       return res.send({
         statusCode: HttpStatusCodes.OK,
         data: {
+          // Build explicitly: spreading a hydrated Mongoose document drops _id
           conversation: ConversationService.toPublic({
-            ...conversation,
+            _id: conversation._id,
+            title: conversation.title,
+            createdAt: conversation.createdAt,
             lastMessageAt: assistantMessage.createdAt,
           }),
           userMessage: MessageService.toPublic(userMessage),

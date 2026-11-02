@@ -141,7 +141,8 @@ The Vite dev server proxies `/auth` and `/chat` to the API, so the browser sees 
 | `JWT_EXPIRES_IN`             | `7d`                                      | Token lifetime                                      |
 | `COOKIE_SECURE`              | `true` in production                      | Send the cookie over HTTPS only                     |
 | `OPENROUTER_API_KEY`         | –                                         | OpenRouter API key (**required for chat**)          |
-| `OPENROUTER_MODEL`           | `meta-llama/llama-3.3-70b-instruct:free`  | Any model ID from <https://openrouter.ai/models>    |
+| `OPENROUTER_MODEL`           | `nvidia/nemotron-3.5-lightning:free`  | Any model ID from <https://openrouter.ai/models>    |
+| `OPENROUTER_FALLBACK_MODELS` | `google/gemma-4-31b-it:free,openrouter/free` | Tried in order if the primary model fails (`openrouter/free` picks any available free model) |
 | `OPENROUTER_TIMEOUT_MS`      | `30000`                                   | AI request timeout                                  |
 | `AI_CONTEXT_MESSAGES`        | `10`                                      | Previous messages sent as context                   |
 | `AUTH_RATE_LIMIT_WINDOW_MS`  | `900000`                                  | Auth rate limit window                              |
