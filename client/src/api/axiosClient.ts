@@ -18,6 +18,19 @@ export const setUnauthorizedHandler = (handler: (() => void) | null) => {
   onUnauthorized = handler
 }
 
+/** For requests made outside axios (e.g. streaming with fetch). */
+export const notifyUnauthorized = () => onUnauthorized?.()
+
+/** Error with a user-facing message, used by the fetch-based streaming client. */
+export class ApiRequestError extends Error {
+  readonly statusCode: number
+
+  constructor(statusCode: number, message: string) {
+    super(message)
+    this.statusCode = statusCode
+  }
+}
+
 axiosClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
@@ -33,6 +46,8 @@ export const getErrorMessage = (
   error: unknown,
   fallback = 'Something went wrong. Please try again.',
 ) => {
+  if (error instanceof ApiRequestError) return error.message || fallback
+  if (error instanceof TypeError) return 'Unable to reach the server. Check your connection.'
   if (axios.isAxiosError<{ message?: string }>(error)) {
     if (error.code === 'ECONNABORTED') return 'The request timed out. Please try again.'
     if (!error.response) return 'Unable to reach the server. Check your connection.'

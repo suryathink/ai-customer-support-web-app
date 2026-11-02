@@ -13,6 +13,8 @@ export interface ChatMessage {
   createdAt: string
   /** Client-only: message shown optimistically before the server confirms it */
   pending?: boolean
+  /** Client-only: assistant reply that is still streaming in */
+  streaming?: boolean
 }
 
 export interface Conversation {

@@ -6,7 +6,7 @@ A full-stack, AI-powered customer support chat app. Users sign up or log in, cha
 
 - **JWT authentication:** signup, login and logout. Passwords are hashed with bcrypt, and the token is stored in an **httpOnly cookie** (not readable by JavaScript).
 - **Protected routes** on both the API and the React app.
-- **AI chat:** messages are sent to OpenRouter along with recent conversation context, so replies follow the thread.
+- **AI chat with streaming:** messages are sent to OpenRouter along with recent conversation context, and the reply streams into the chat token by token.
 - **Chat history:** conversations and messages are stored in MongoDB, scoped to each user. Past conversations are listed in a sidebar grouped by date, and you can reopen or delete them.
 - **Typing indicator** while the assistant is replying.
 - **Rate limiting** with `express-rate-limit`: a strict limit on auth endpoints and a separate one on sending messages.
@@ -70,6 +70,7 @@ All `/chat` routes require authentication. Responses look like `{ statusCode, da
 | POST   | `/auth/logout`                   | Clear the session cookie                                     |
 | GET    | `/auth/me`                       | Current user (used to restore the session)                   |
 | POST   | `/chat/send`                     | `{ message, conversationId? }`: returns the AI reply. Leave out `conversationId` to start a new conversation. |
+| POST   | `/chat/send/stream`              | Same as `/chat/send`, but streams the reply as server-sent events (`token` events, then `done` with the saved messages). Used by the UI. |
 | GET    | `/chat/history`                  | List the user's conversations (newest first)                 |
 | GET    | `/chat/history/:conversationId`  | Messages of one conversation                                 |
 | DELETE | `/chat/history/:conversationId`  | Delete a conversation and its messages                       |

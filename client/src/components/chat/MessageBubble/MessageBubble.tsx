@@ -23,14 +23,16 @@ export const MessageBubble = memo(function MessageBubble({ message, userName }: 
             <p className={styles.plain}>{message.content}</p>
           ) : (
             // react-markdown does not render raw HTML, so AI output is safe to display
-            <div className={styles.markdown}>
+            <div className={cx(styles.markdown, message.streaming && styles.streaming)}>
               <Markdown>{message.content}</Markdown>
             </div>
           )}
         </div>
-        <time className={styles.time} dateTime={message.createdAt}>
-          {message.pending ? 'Sending…' : formatTime(message.createdAt)}
-        </time>
+        {!message.streaming && (
+          <time className={styles.time} dateTime={message.createdAt}>
+            {message.pending ? 'Sending…' : formatTime(message.createdAt)}
+          </time>
+        )}
       </div>
     </div>
   )

@@ -10,7 +10,10 @@ interface ChatWindowProps {
   messages: ChatMessage[]
   userName?: string
   loading: boolean
+  /** Waiting for the first token */
   isTyping: boolean
+  /** A reply is in progress (waiting or streaming) */
+  isResponding: boolean
   loadError: string | null
   sendError: string | null
   canRetry: boolean
@@ -25,6 +28,7 @@ export function ChatWindow({
   userName,
   loading,
   isTyping,
+  isResponding,
   loadError,
   sendError,
   canRetry,
@@ -62,10 +66,10 @@ export function ChatWindow({
         </div>
       )
     }
-    if (messages.length === 0 && !isTyping) {
+    if (messages.length === 0 && !isResponding) {
       return (
         <>
-          <EmptyState userName={userName} onSuggestionClick={onSend} disabled={isTyping} />
+          <EmptyState userName={userName} onSuggestionClick={onSend} disabled={isResponding} />
           {errorFooter && <div className={styles.emptyError}>{errorFooter}</div>}
         </>
       )
@@ -80,7 +84,7 @@ export function ChatWindow({
       {renderBody()}
       <ChatInput
         onSend={onSend}
-        disabled={isTyping || loading || Boolean(loadError)}
+        disabled={isResponding || loading || Boolean(loadError)}
         focusKey={conversationId ?? 'new'}
       />
     </section>

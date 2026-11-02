@@ -100,6 +100,25 @@
   }
 }
 
+// Blinking caret after the last streamed word
+.streaming > :last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  border-radius: 2px;
+  background: $color-primary;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

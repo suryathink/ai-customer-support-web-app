@@ -16,6 +16,12 @@ router.post(
   validateBody(sendMessageSchema),
   ChatController.send
 );
+router.post(
+  "/send/stream",
+  chatLimiter,
+  validateBody(sendMessageSchema),
+  ChatController.sendStream
+);
 router.get("/history", ChatController.history);
 router.get("/history/:conversationId", ChatController.conversationMessages);
 router.delete("/history/:conversationId", ChatController.deleteConversation);

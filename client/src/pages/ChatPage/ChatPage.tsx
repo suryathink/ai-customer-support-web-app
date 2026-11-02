@@ -76,6 +76,7 @@ export function ChatPage() {
           userName={user?.name}
           loading={chat.loading}
           isTyping={chat.isTyping}
+          isResponding={chat.isResponding}
           loadError={chat.loadError}
           sendError={chat.sendError}
           canRetry={Boolean(chat.failedMessage)}
