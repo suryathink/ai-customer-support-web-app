@@ -17,8 +17,6 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: 5173,
-      // Polling is needed for hot reload inside Docker on Windows/macOS bind mounts
-      watch: env.VITE_USE_POLLING === 'true' ? { usePolling: true, interval: 300 } : undefined,
       proxy: {
         '/auth': { target: apiTarget, changeOrigin: true },
         '/chat': { target: apiTarget, changeOrigin: true },

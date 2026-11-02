@@ -11,7 +11,7 @@ A full-stack, AI-powered customer support chat app. Users sign up or log in, cha
 - **Typing indicator** while the assistant is replying.
 - **Rate limiting** with `express-rate-limit`: a strict limit on auth endpoints and a separate one on sending messages.
 - Responsive UI built with React and SCSS modules: optimistic messages, error retry, Markdown rendering of AI replies, light/dark theme.
-- **Dockerized:** a dev stack (with a local MongoDB and hot reload) and a production stack (nginx plus the compiled API, using MongoDB Atlas).
+- **Dockerized:** `docker compose up` runs the production build (nginx serving the React app plus the compiled API) against your MongoDB Atlas database.
 
 ## Tech stack
 
@@ -19,7 +19,7 @@ A full-stack, AI-powered customer support chat app. Users sign up or log in, cha
 | -------- | ------------------------------------------------- |
 | Frontend | React 19, Vite, TypeScript, SCSS modules, Axios   |
 | Backend  | Node.js, Express, TypeScript, Mongoose, Joi       |
-| Database | MongoDB (local container in dev, Atlas in prod)   |
+| Database | MongoDB Atlas                                     |
 | Auth     | JWT + bcrypt (httpOnly cookie)                    |
 | AI       | OpenRouter (any model, free models supported)     |
 | DevOps   | Docker, Docker Compose, nginx                     |
@@ -56,8 +56,7 @@ A full-stack, AI-powered customer support chat app. Users sign up or log in, cha
 │   │   ├── validations/       # Joi schemas
 │   │   └── index.ts
 │   ├── Dockerfile  .env.example
-├── docker-compose.yml         # development stack
-└── docker-compose.prod.yml    # production stack
+└── docker-compose.yml
 ```
 
 ## API
@@ -97,36 +96,22 @@ Edit `server/.env` and set at least:
 
 - `OPENROUTER_API_KEY`: your OpenRouter key
 - `JWT_SECRET`: a long random string, e.g. `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"`
-- `MONGO_URI`: only needed when running without Docker, or in production
+- `MONGO_URI`: your **MongoDB Atlas** connection string
+- `CLIENT_ORIGIN`: the URL the app is served from (`http://localhost:3000` with Docker)
 
-### 2a. Run with Docker (development)
-
-```bash
-docker compose up
-```
-
-This starts **MongoDB**, the **API** and the **Vite dev server**, all with hot reload.
-
-- App: <http://localhost:5173>
-- API: <http://localhost:5000>
-
-In development the API always uses the bundled Mongo container. Data is kept in the `mongo-data` volume (`docker compose down -v` wipes it).
-
-### 2b. Run with Docker (production)
-
-Set `MONGO_URI` in `server/.env` to your **MongoDB Atlas** connection string, set `NODE_ENV=production`, and set `CLIENT_ORIGIN` to the URL you serve the app from (e.g. `http://localhost:3000`). Then run:
+### 2a. Run with Docker
 
 ```bash
-docker compose -f docker-compose.prod.yml up --build -d
+docker compose up --build
 ```
 
 - App: <http://localhost:3000> (nginx serves the React build and proxies `/auth` and `/chat` to the API)
 
-> In production the auth cookie is marked `Secure`, so it only works over HTTPS. `localhost` is exempt. If you serve over plain HTTP on another host, set `COOKIE_SECURE=false`.
+Stop it with `docker compose down`.
 
-### 2c. Run without Docker
+> The API runs with `NODE_ENV=production`, so the auth cookie is marked `Secure` and only works over HTTPS. `localhost` is exempt. If you serve over plain HTTP on another host, set `COOKIE_SECURE=false`.
 
-You need a MongoDB instance: a local one or an Atlas URI in `server/.env`.
+### 2b. Run without Docker (local development)
 
 ```bash
 # API
