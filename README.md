@@ -4,8 +4,8 @@ A full-stack, AI-powered customer support chat app. Users sign up or log in, cha
 
 ## Live demo
 
-- **App:** <https://chat.suryathink.com>
-- **API:** <https://chat.api.suryathink.com> (health check: [/health](https://chat.api.suryathink.com/health))
+- **Frontend Deployed Link:** <https://chat.suryathink.com>
+- **Backend API:** <https://chat.api.suryathink.com> (health check: [/health](https://chat.api.suryathink.com/health))
 
 ## Contents
 
