@@ -98,6 +98,35 @@
   h3 {
     font-size: $font-size-md;
   }
+
+  a {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    // Long URLs wrap instead of overflowing the bubble
+    word-break: break-word;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  // GFM tables (scroll sideways on narrow screens)
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+  }
+
+  th,
+  td {
+    padding: $space-1 $space-2;
+    border: 1px solid $color-border;
+    text-align: left;
+  }
 }
 
 // Blinking caret after the last streamed word

@@ -30,6 +30,7 @@ const CREATOR_PATTERNS: RegExp[] = [
   /\babout (the )?(developer|creator|author|builder|engineer|maker)\b/i,
   /\bsurya\b/i,
   /\b(hire|hiring|recruit\w*|portfolio)\b/i,
+  /\b(salary|compensation|ctc|lpa|notice period|expected pay)\b/i,
   /\b(his|your (creator|developer)'?s?|the (creator|developer)'?s?) (resume|cv|linkedin|github)\b/i,
   /\b(contact|reach|email) (the )?(developer|creator|author|him)\b/i,
   /\b(his|the developer'?s|the creator'?s) (experience|skills|projects|work|background)\b/i,
